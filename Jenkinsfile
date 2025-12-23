@@ -18,6 +18,24 @@ pipeline {
         }
       }
     }
+    stage('Image Analysis') {
+      parallel {
+        stage('Image Linting') {
+          steps {
+            container('docker-tools') {
+              sh 'dockle docker.io/salimgrayaa/dso-demo'
+            }
+          }
+        }
+        stage('Image Scan') {
+          steps {
+            container('docker-tools') {
+              sh 'trivy image --timeout 10m --exit-code 1 salimgrayaa/dso-demo'
+            }
+          }
+        }
+      }
+    }
     stage('Static Analysis') {
       parallel {
         stage('Unit Tests') {
