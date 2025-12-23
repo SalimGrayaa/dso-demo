@@ -18,24 +18,24 @@ pipeline {
         }
       }
     }
-    // stage('Image Analysis') {
-    //   parallel {
-    //     stage('Image Linting') {
-    //       steps {
-    //         container('docker-tools') {
-    //           sh 'dockle docker.io/salimgrayaa/dso-demo'
-    //         }
-    //       }
-    //     }
-    //     stage('Image Scan') {
-    //       steps {
-    //         container('docker-tools') {
-    //           sh 'trivy image --timeout 10m --exit-code 1 salimgrayaa/dso-demo'
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
+    stage('Image Analysis') {
+      parallel {
+        stage('Image Linting') {
+          steps {
+            container('docker-tools') {
+              sh 'dockle docker.io/salimgrayaa/dso-demo'
+            }
+          }
+        }
+        stage('Image Scan') {
+          steps {
+            container('docker-tools') {
+              sh 'trivy image --timeout 10m --exit-code 1 salimgrayaa/dso-demo'
+            }
+          }
+        }
+      }
+    }
     stage('Static Analysis') {
       parallel {
         stage('Unit Tests') {
@@ -64,19 +64,19 @@ pipeline {
           }
         }
 
-        // stage('OSS License Checker') {
-        //   steps {
-        //     container('licensefinder') {
-        //       sh 'ls -al'
-        //       sh '''#!/bin/bash --login
-        //       /bin/bash --login
-        //       rvm use default
-        //       gem install license_finder
-        //       license_finder
-        //       '''
-        //     }
-        //   }
-        // }
+        stage('OSS License Checker') {
+          steps {
+            container('licensefinder') {
+              sh 'ls -al'
+              sh '''#!/bin/bash --login
+              /bin/bash --login
+              rvm use default
+              gem install license_finder
+              license_finder
+              '''
+            }
+          }
+        }
 
       }
     }
