@@ -101,7 +101,7 @@ pipeline {
           steps {
             container('docker-tools') {
               sh '''
-                dockle docker.io/salimgrayaa/dso-demo
+                dockle --timeout 600s docker.io/salimgrayaa/dso-demo
               '''
             }
           }
