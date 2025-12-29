@@ -100,7 +100,10 @@ pipeline {
         stage('Image Linting') {
           steps {
             container('docker-tools') {
-              sh 'dockle docker.io/salimgrayaa/dso-demo'
+              sh '''
+                docker pull docker.io/salimgrayaa/dso-demo
+                dockle docker.io/salimgrayaa/dso-demo
+              '''
             }
           }
         }
