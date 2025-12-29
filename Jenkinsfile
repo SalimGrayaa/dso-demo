@@ -101,7 +101,6 @@ pipeline {
           steps {
             container('docker-tools') {
               sh '''
-                docker pull docker.io/salimgrayaa/dso-demo
                 dockle docker.io/salimgrayaa/dso-demo
               '''
             }
