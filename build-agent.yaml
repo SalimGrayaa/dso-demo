@@ -6,6 +6,11 @@ metadata:
     app: spring-build-ci
 spec:
   containers:
+    - name: argocd-cli
+      image: schoolofdevops/argocd-cli
+      command:
+        - cat
+      tty: true
     - name: maven
       image: maven:latest
       command:
