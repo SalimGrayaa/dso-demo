@@ -1,26 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
+  name: dso-demo
   labels:
     app: dso-demo
-  name: dso-demo
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: dso-demo
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: dso-demo
     spec:
       containers:
-      - image: salimgrayaa/dso-demo
-        name: dso-demo
-        ports:
-        - containerPort: 8080
-        resources: {}
-status: {}
+        - name: dso-demo
+          image: salimgrayaa/dso-demo
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+          securityContext:
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 1000
