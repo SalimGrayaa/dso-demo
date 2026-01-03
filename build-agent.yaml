@@ -6,6 +6,17 @@ metadata:
     app: spring-build-ci
 spec:
   containers:
+
+    - name: kubesec
+      image: kubesec/kubesec:latest
+      command:
+        - sleep
+      args:
+        - "99d"  # Keeps the container alive for Jenkins to use
+      tty: true
+      securityContext:
+        runAsUser: 0  # Resolves permission issues in the workspace @tmp folder
+        
     - name: zap
       image: ghcr.io/zaproxy/zaproxy:stable
       command:
