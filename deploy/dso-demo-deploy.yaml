@@ -18,6 +18,7 @@ spec:
         vault.hashicorp.com/role: 'dso-demo'
         vault.hashicorp.com/agent-inject-secret-database: 'secret/dso-demo/database'
     spec:
+      serviceAccountName: dso-demo
       containers:
         - name: dso-demo
           image: salimgrayaa/dso-demo
